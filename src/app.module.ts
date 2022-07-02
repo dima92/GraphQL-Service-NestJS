@@ -8,7 +8,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      typePath: ['./src/modules/**schemas/*.graphql'],
+      typePaths: ['./src/modules/**/schemas/*.graphql'],
     }),
   ],
   controllers: [AppController],
