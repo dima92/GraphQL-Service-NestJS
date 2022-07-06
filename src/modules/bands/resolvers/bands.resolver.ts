@@ -16,8 +16,8 @@ export class BandsResolver {
   }
 
   @Query()
-  async bands() {
-    return this.bandsService.getAllBands();
+  async bands(@Args('limit') limit: number, @Args('offset') offset: number) {
+    return this.bandsService.getAllBands(limit, offset);
   }
 
   @Resolver()

@@ -11,7 +11,7 @@ export class GenresResolver {
   }
 
   @Query()
-  async genres() {
-    return this.genresService.getAllGenres();
+  async genres(@Args('limit') limit: number, @Args('offset') offset: number) {
+    return this.genresService.getAllGenres(limit, offset);
   }
 }

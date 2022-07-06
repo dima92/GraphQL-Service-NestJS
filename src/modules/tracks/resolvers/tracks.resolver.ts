@@ -19,8 +19,8 @@ export class TracksResolver {
   }
 
   @Query()
-  async tracks() {
-    return this.tracksService.getAllTracks();
+  async tracks(@Args('limit') limit: number, @Args('offset') offset: number) {
+    return this.tracksService.getAllTracks(limit, offset);
   }
 
   @Resolver()

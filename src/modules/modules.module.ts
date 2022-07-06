@@ -9,19 +9,26 @@ import { BandsResolver } from './bands/resolvers/bands.resolver';
 import { GenresResolver } from './genres/resolvers/genres.resolver';
 import { TracksResolver } from './tracks/resolvers/tracks.resolver';
 import { ArtistsResolver } from './artists/resolvers/artists.resolver';
+import { UsersService } from './users/services/users.service';
+import { UsersResolver } from './users/resolvers/user.resolver';
+import { HttpModule } from '@nestjs/axios';
+import 'dotenv/config';
 
 @Module({
+  imports: [HttpModule],
   providers: [
     AlbumsService,
     ArtistsService,
     BandsService,
     GenresService,
     TracksService,
+    UsersService,
     AlbumsResolver,
     ArtistsResolver,
     BandsResolver,
     GenresResolver,
     TracksResolver,
+    UsersResolver,
   ],
 })
 export class ModulesModule {}

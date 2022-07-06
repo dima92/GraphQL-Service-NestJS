@@ -15,8 +15,8 @@ export class ArtistsResolver {
   }
 
   @Query()
-  async artists() {
-    return this.artistsService.getAllArtists();
+  async artists(@Args('limit') limit: number, @Args('offset') offset: number) {
+    return this.artistsService.getAllArtists(limit, offset);
   }
 
   @Resolver()
