@@ -48,7 +48,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  createBand(band: NewBandInput): Band
+  createBand(newBand: NewBandInput): Band
   deleteBand(id: ID!): DEL
   updateBand(id: ID!, band: BandInput): Band
 }
