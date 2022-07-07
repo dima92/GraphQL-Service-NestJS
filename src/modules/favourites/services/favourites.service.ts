@@ -19,6 +19,7 @@ export class FavouritesService {
 
   addToFavourites = async (type: string, id: string, context: any) => {
     const { authorization } = context.req.headers;
+    if (!authorization) return null;
     const { data } = await this.httpService.axiosRef.put(
       `${this.baseUrl}/add`,
       { type: type, id },
