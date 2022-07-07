@@ -1,73 +1,200 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Graphql Service
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Installation service
 
-## Description
+1. Clone repository
+2. Move to `dev` branch
+3. Enter `npm install` in terminal
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Installation microservices
 
-## Installation
+1. Clone [repository](https://github.com/rolling-scopes-school/node-graphql-service)
+2. Use installation instruction in README.md from repository
 
-```bash
-$ npm install
+## Running service
+
+1. Create `.env` file. Use `.env.example` to type parameters
+2. Enter `npm run start` in terminal to start service
+3. Open playground by url `http://localhost:PORT/graphql`, where `PORT` is a number which you enter in `.env` (by default is `3000`)
+
+## Queries list
+
+<details>
+    <summary>Show queries</summary>
+    <ul>
+        <li>artist</li>
+        <li>artists</li>
+        <li>genre</li>
+        <li>genres</li>
+        <li>track</li>
+        <li>tracks</li>
+        <li>band</li>
+        <li>bands</li>
+        <li>album</li>
+        <li>albums</li>
+        <li>jwt</li>
+        <li>user</li>
+        <li>favourites (available only for logged-in user)</li>
+    </ul>
+</details>
+
+## Mutations list
+
+<details>
+    <summary>Show mutations</summary>
+    <ul>
+        <li>Artists
+            <ul>
+                <li>createArtist</li>
+                <li>deleteArtist</li>
+                <li>updateArtist</li>
+            </ul>
+        </li>
+        <li>Genres
+            <ul>
+                <li>createGenre</li>
+                <li>deleteGenre</li>
+                <li>updateGenre</li>
+            </ul>
+        </li>
+        <li>Bands
+            <ul>
+                <li>createBand</li>
+                <li>deleteBand</li>
+                <li>updateBand</li>
+            </ul>
+        </li>
+        <li>Tracks
+            <ul>
+                <li>createTrack</li>
+                <li>deleteTrack</li>
+                <li>updateTrack</li>
+            </ul>
+        </li>
+        <li>Albums
+            <ul>
+                <li>createAlbum</li>
+                <li>deleteAlbum</li>
+                <li>updateAlbum</li>
+            </ul>
+        </li>
+        <li>Users
+            <ul>
+                <li>register</li>
+            </ul>
+        </li>
+        <li>Favourites
+            <ul>
+                <li>addTrackToFavourites</li>
+                <li>addBandToFavourites</li>
+                <li>addArtistToFavourites</li>
+                <li>addGenreToFavourites</li>
+            </ul>
+        </li>
+    </ul>
+</details>
+
+## Requests example
+
+1. Get all artists
+
+```graphql
+query {
+  artists(limit: 10, offset: 0) {
+    items {
+      id
+      firstName
+      secondName
+      country
+      bands {
+        id
+        name
+        genres {
+          id
+          country
+          description
+          year
+        }
+      }
+    }
+  }
+}
 ```
 
-## Running the app
+2. Get one album by `id`
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```graphql
+query {
+  album(id: "id") {
+    name
+    released
+    tracks {
+      id
+      title
+      duration
+    }
+  }
+}
 ```
 
-## Test
+3. Register new user
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```graphql
+mutation {
+  register(
+    firstName: "firstname"
+    lastName: "lastname"
+    email: "email@mail.com"
+    password: "password"
+  ) {
+    id
+    firstName
+    lastName
+    email
+  }
+}
 ```
 
-## Support
+4. Get JWT
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```graphql
+query {
+  jwt(email: "email@mail.com", password: "password") {
+    jwt
+  }
+}
+```
 
-## Stay in touch
+5. Create artist
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Note!** Enter authorization header for all mutations except register
 
-## License
+```json
+{
+  "headers": {
+    "authorization": "Bearer JWT"
+  }
+}
+```
 
-Nest is [MIT licensed](LICENSE).
+```graphql
+mutation {
+  createArtist(
+    newArtist: {
+      firstName: "firstName"
+      secondName: "secondName"
+      country: "country"
+      bandsIds: ["id1", "id2"]
+    }
+  ) {
+    id
+    firstName
+    secondName
+    bands {
+      id
+    }
+  }
+}
+```
