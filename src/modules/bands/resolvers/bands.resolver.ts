@@ -31,7 +31,12 @@ export class BandsResolver {
   @Resolver()
   @ResolveField()
   async members(@Parent() band) {
-    return this.bandsService.getMembers(band);
+    const { members } = band;
+    return await Promise.all(
+      members.map((member) => {
+        return this.bandsService.getMembers(member);
+      }),
+    );
   }
 
   @Resolver()

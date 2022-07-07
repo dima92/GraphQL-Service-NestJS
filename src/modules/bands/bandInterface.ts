@@ -1,12 +1,12 @@
 interface BandInterface {
   origin?: string;
-  membersId?: Member[];
+  members?: MemberInterface[];
   website?: string;
   genresIds?: string[];
 }
 
-interface Member {
-  artist: string;
+export interface MemberInterface {
+  id: string;
   instrument: string;
   years: number[];
 }

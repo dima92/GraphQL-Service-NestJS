@@ -8,7 +8,9 @@ type Band {
 }
 
 type Member {
-  artistId: ID!
+  id: ID!
+  firstName: String
+  secondName: String
   instrument: String
   years: [Int]
 }
