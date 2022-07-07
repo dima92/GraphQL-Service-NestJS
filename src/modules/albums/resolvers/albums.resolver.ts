@@ -12,7 +12,7 @@ import { ArtistsService } from '../../artists/services/artists.service';
 import { BandsService } from '../../bands/services/bands.service';
 import { TracksService } from '../../tracks/services/tracks.service';
 import { GenresService } from '../../genres/services/genres.service';
-import { NewAlbumInterface } from '../albumInterface';
+import { UpdateAlbumInterface, NewAlbumInterface } from '../albumInterface';
 
 @Resolver('Album')
 export class AlbumsResolver {
@@ -85,5 +85,14 @@ export class AlbumsResolver {
     @Context() context: any,
   ) {
     return this.albumsService.createAlbum(newAlbum, context);
+  }
+
+  @Mutation()
+  async updateAlbum(
+    @Args('id') id: string,
+    @Args('updatedAlbum') updatedAlbum: UpdateAlbumInterface,
+    @Context() context: any,
+  ) {
+    return this.albumsService.updateAlbum(id, updatedAlbum, context);
   }
 }

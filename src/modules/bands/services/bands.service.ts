@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { NewBandInterface, UpdateBandInterface } from '../bandInterface';
 
 @Injectable()
 export class BandsService {
@@ -29,4 +30,36 @@ export class BandsService {
   getMembers(band) {
     return Promise.resolve(undefined);
   }
+
+  createBand = async (newBand: NewBandInterface, context) => {
+    const { authorization } = context.req.headers;
+    const { data } = await this.httpService.axiosRef.post(
+      this.baseUrl,
+      newBand,
+      {
+        headers: {
+          authorization,
+        },
+      },
+    );
+    return { ...data, id: data._id };
+  };
+
+  updateBand = async (
+    id: string,
+    updatedBand: UpdateBandInterface,
+    context: any,
+  ) => {
+    const { authorization } = context.req.headers;
+    const { data } = await this.httpService.axiosRef.put(
+      `${this.baseUrl}/${id}`,
+      updatedBand,
+      {
+        headers: {
+          authorization,
+        },
+      },
+    );
+    return { ...data, id: data._id };
+  };
 }

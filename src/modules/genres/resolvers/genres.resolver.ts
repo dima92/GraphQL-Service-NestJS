@@ -1,5 +1,6 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GenresService } from '../services/genres.service';
+import { NewGenreInterface, UpdateGenreInterface } from '../genreInterface';
 
 @Resolver()
 export class GenresResolver {
@@ -13,5 +14,22 @@ export class GenresResolver {
   @Query()
   async genres(@Args('limit') limit: number, @Args('offset') offset: number) {
     return this.genresService.getAllGenres(limit, offset);
+  }
+
+  @Mutation()
+  async createGenre(
+    @Args('newGenre') newGenre: NewGenreInterface,
+    @Context() context: any,
+  ) {
+    return this.genresService.createGenre(newGenre, context);
+  }
+
+  @Mutation()
+  async updateGenre(
+    @Args('id') id: string,
+    @Args('updatedGenre') updatedGenre: UpdateGenreInterface,
+    @Context() context: any,
+  ) {
+    return this.genresService.updateGenre(id, updatedGenre, context);
   }
 }

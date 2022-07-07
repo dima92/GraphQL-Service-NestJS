@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { NewAlbumInterface } from '../albumInterface';
+import { UpdateAlbumInterface, NewAlbumInterface } from '../albumInterface';
 
 @Injectable()
 export class AlbumsService {
@@ -35,6 +35,24 @@ export class AlbumsService {
     const { data } = await this.httpService.axiosRef.post(
       this.baseUrl,
       newAlbum,
+      {
+        headers: {
+          authorization,
+        },
+      },
+    );
+    return { ...data, id: data._id };
+  };
+
+  updateAlbum = async (
+    id: string,
+    updatedAlbum: UpdateAlbumInterface,
+    context: any,
+  ) => {
+    const { authorization } = context.req.headers;
+    const { data } = await this.httpService.axiosRef.put(
+      `${this.baseUrl}/${id}`,
+      updatedAlbum,
       {
         headers: {
           authorization,

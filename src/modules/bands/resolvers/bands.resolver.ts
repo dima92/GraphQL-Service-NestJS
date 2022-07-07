@@ -1,7 +1,15 @@
-import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { BandsService } from '../services/bands.service';
 import { Query } from '@nestjs/graphql';
 import { GenresService } from '../../genres/services/genres.service';
+import { NewBandInterface, UpdateBandInterface } from '../bandInterface';
 
 @Resolver()
 export class BandsResolver {
@@ -35,5 +43,22 @@ export class BandsResolver {
         return this.genresService.getGenreById(id);
       }),
     );
+  }
+
+  @Mutation()
+  async createBand(
+    @Args('newBand') newBand: NewBandInterface,
+    @Context() context: any,
+  ) {
+    return this.bandsService.createBand(newBand, context);
+  }
+
+  @Mutation()
+  async updateBand(
+    @Args('id') id: string,
+    @Args('updatedBand') updatedBand: UpdateBandInterface,
+    @Context() context: any,
+  ) {
+    return this.bandsService.updateBand(id, updatedBand, context);
   }
 }

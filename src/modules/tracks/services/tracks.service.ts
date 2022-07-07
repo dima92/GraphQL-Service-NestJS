@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { NewTrackInterface, UpdateTrackInterface } from '../trackInterface';
 
 @Injectable()
 export class TracksService {
@@ -27,5 +28,37 @@ export class TracksService {
         return { ...item, id: item._id };
       }),
     };
+  };
+
+  createTrack = async (newTrack: NewTrackInterface, context) => {
+    const { authorization } = context.req.headers;
+    const { data } = await this.httpService.axiosRef.post(
+      this.baseUrl,
+      newTrack,
+      {
+        headers: {
+          authorization,
+        },
+      },
+    );
+    return { ...data, id: data._id };
+  };
+
+  editTrack = async (
+    id: string,
+    updatedTrack: UpdateTrackInterface,
+    context: any,
+  ) => {
+    const { authorization } = context.req.headers;
+    const { data } = await this.httpService.axiosRef.put(
+      `${this.baseUrl}/${id}`,
+      updatedTrack,
+      {
+        headers: {
+          authorization,
+        },
+      },
+    );
+    return { ...data, id: data._id };
   };
 }

@@ -1,6 +1,15 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { ArtistsService } from '../services/artists.service';
 import { BandsService } from '../../bands/services/bands.service';
+import { NewArtistInterface, UpdateArtistInterface } from '../artistInterface';
 
 @Resolver()
 export class ArtistsResolver {
@@ -28,5 +37,22 @@ export class ArtistsResolver {
         return this.bandsService.getBandById(id);
       }),
     );
+  }
+
+  @Mutation()
+  async createArtist(
+    @Args('newArtist') newArtist: NewArtistInterface,
+    @Context() context: any,
+  ) {
+    return this.artistsService.createArtist(newArtist, context);
+  }
+
+  @Mutation()
+  async updateArtist(
+    @Args('id') id: string,
+    @Args('updatedArtist') updatedArtist: UpdateArtistInterface,
+    @Context() context: any,
+  ) {
+    return this.artistsService.updateArtist(id, updatedArtist, context);
   }
 }

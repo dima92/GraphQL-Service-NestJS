@@ -1,8 +1,17 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { TracksService } from '../services/tracks.service';
 import { ArtistsService } from '../../artists/services/artists.service';
 import { BandsService } from '../../bands/services/bands.service';
 import { GenresService } from '../../genres/services/genres.service';
+import { NewTrackInterface, UpdateTrackInterface } from '../trackInterface';
 
 @Resolver()
 export class TracksResolver {
@@ -50,9 +59,26 @@ export class TracksResolver {
   async genres(@Parent() track) {
     const { genresIds } = track;
     return await Promise.all(
-      genresIds.map((id) => {
+      genresIds.map((id: string) => {
         return this.genresService.getGenreById(id);
       }),
     );
+  }
+
+  @Mutation()
+  async createTrack(
+    @Args('newTrack') newTrack: NewTrackInterface,
+    @Context() context: any,
+  ) {
+    return this.tracksService.createTrack(newTrack, context);
+  }
+
+  @Mutation()
+  async updateTrack(
+    @Args('id') id: string,
+    @Args('updatedTrack') updatedTrack: UpdateTrackInterface,
+    @Context() context: any,
+  ) {
+    return this.tracksService.editTrack(id, updatedTrack, context);
   }
 }
