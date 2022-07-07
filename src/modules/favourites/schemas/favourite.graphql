@@ -8,7 +8,7 @@ type Favourites {
 }
 
 extend type Query {
-  favourites: [Favourites]
+  favourites: Favourites
 }
 
 extend type Mutation {
