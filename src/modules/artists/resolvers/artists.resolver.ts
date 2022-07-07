@@ -11,7 +11,7 @@ import { ArtistsService } from '../services/artists.service';
 import { BandsService } from '../../bands/services/bands.service';
 import { NewArtistInterface, UpdateArtistInterface } from '../artistInterface';
 
-@Resolver()
+@Resolver('Artist')
 export class ArtistsResolver {
   constructor(
     private readonly artistsService: ArtistsService,
@@ -54,5 +54,10 @@ export class ArtistsResolver {
     @Context() context: any,
   ) {
     return this.artistsService.updateArtist(id, updatedArtist, context);
+  }
+
+  @Mutation()
+  async deleteArtist(@Args('id') id: string, @Context() context: any) {
+    return this.artistsService.deleteArtist(id, context);
   }
 }

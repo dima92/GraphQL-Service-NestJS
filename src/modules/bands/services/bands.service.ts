@@ -51,6 +51,7 @@ export class BandsService {
     context: any,
   ) => {
     const { authorization } = context.req.headers;
+    if (!authorization) return;
     const { data } = await this.httpService.axiosRef.put(
       `${this.baseUrl}/${id}`,
       updatedBand,
@@ -61,5 +62,18 @@ export class BandsService {
       },
     );
     return { ...data, id: data._id };
+  };
+
+  deleteBand = async (id: string, context: any) => {
+    const { authorization } = context.req.headers;
+    const { data } = await this.httpService.axiosRef.delete(
+      `${this.baseUrl}/${id}`,
+      {
+        headers: {
+          authorization,
+        },
+      },
+    );
+    return data;
   };
 }

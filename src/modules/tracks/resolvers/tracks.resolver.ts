@@ -13,7 +13,7 @@ import { BandsService } from '../../bands/services/bands.service';
 import { GenresService } from '../../genres/services/genres.service';
 import { NewTrackInterface, UpdateTrackInterface } from '../trackInterface';
 
-@Resolver()
+@Resolver('Track')
 export class TracksResolver {
   constructor(
     private readonly tracksService: TracksService,
@@ -44,7 +44,7 @@ export class TracksResolver {
   }
 
   @Resolver()
-  @ResolveField()
+  @ResolveField('bands')
   async bands(@Parent() track) {
     const { bandsIds } = track;
     return await Promise.all(
@@ -80,5 +80,10 @@ export class TracksResolver {
     @Context() context: any,
   ) {
     return this.tracksService.editTrack(id, updatedTrack, context);
+  }
+
+  @Mutation()
+  async deleteTrack(@Args('id') id: string, @Context() context: any) {
+    return this.tracksService.deleteTrack(id, context);
   }
 }

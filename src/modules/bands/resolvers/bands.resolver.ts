@@ -11,7 +11,7 @@ import { Query } from '@nestjs/graphql';
 import { GenresService } from '../../genres/services/genres.service';
 import { NewBandInterface, UpdateBandInterface } from '../bandInterface';
 
-@Resolver()
+@Resolver('Band')
 export class BandsResolver {
   constructor(
     private readonly bandsService: BandsService,
@@ -60,5 +60,10 @@ export class BandsResolver {
     @Context() context: any,
   ) {
     return this.bandsService.updateBand(id, updatedBand, context);
+  }
+
+  @Mutation()
+  async deleteBand(@Args('id') id: string, @Context() context: any) {
+    return this.bandsService.deleteBand(id, context);
   }
 }

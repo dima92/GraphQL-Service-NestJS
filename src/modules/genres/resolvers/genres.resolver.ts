@@ -2,7 +2,7 @@ import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GenresService } from '../services/genres.service';
 import { NewGenreInterface, UpdateGenreInterface } from '../genreInterface';
 
-@Resolver()
+@Resolver('Genre')
 export class GenresResolver {
   constructor(private readonly genresService: GenresService) {}
 
@@ -31,5 +31,10 @@ export class GenresResolver {
     @Context() context: any,
   ) {
     return this.genresService.updateGenre(id, updatedGenre, context);
+  }
+
+  @Mutation()
+  async deleteGenre(@Args('id') id: string, @Context() context: any) {
+    return this.genresService.deleteGenre(id, context);
   }
 }

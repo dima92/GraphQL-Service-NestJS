@@ -61,4 +61,17 @@ export class ArtistsService {
     );
     return { ...data, id: data._id };
   };
+
+  deleteArtist = async (id: string, context: any) => {
+    const { authorization } = context.req.headers;
+    const { data } = await this.httpService.axiosRef.delete(
+      `${this.baseUrl}/${id}`,
+      {
+        headers: {
+          authorization,
+        },
+      },
+    );
+    return data;
+  };
 }
