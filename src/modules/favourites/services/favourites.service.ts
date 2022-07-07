@@ -21,7 +21,7 @@ export class FavouritesService {
     const { authorization } = context.req.headers;
     const { data } = await this.httpService.axiosRef.put(
       `${this.baseUrl}/add`,
-      { type, id },
+      { type: type, id },
       {
         headers: {
           authorization,

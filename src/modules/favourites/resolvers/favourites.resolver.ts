@@ -30,29 +30,26 @@ export class FavouritesResolver {
 
   @Mutation()
   async addTrackToFavourites(
-    @Args('type') type: string,
     @Args('id') trackId: string,
     @Context() context: any,
   ) {
-    return this.favouritesService.addToFavourites(type, trackId, context);
+    return this.favouritesService.addToFavourites('tracks', trackId, context);
   }
 
   @Mutation()
   async addBandToFavourites(
-    @Args('type') type: string,
     @Args('id') bandId: string,
     @Context() context: any,
   ) {
-    return this.favouritesService.addToFavourites(type, bandId, context);
+    return this.favouritesService.addToFavourites('bands', bandId, context);
   }
 
   @Mutation()
   async addArtistToFavourites(
-    @Args('type') type: string,
     @Args('id') artistId: string,
     @Context() context: any,
   ) {
-    return this.favouritesService.addToFavourites(type, artistId, context);
+    return this.favouritesService.addToFavourites('artists', artistId, context);
   }
 
   @Resolver()
@@ -101,10 +98,9 @@ export class FavouritesResolver {
 
   @Mutation()
   async addGenreToFavourites(
-    @Args('type') type: string,
     @Args('id') genreId: string,
     @Context() context: any,
   ) {
-    return this.favouritesService.addToFavourites(type, genreId, context);
+    return this.favouritesService.addToFavourites('genres', genreId, context);
   }
 }
