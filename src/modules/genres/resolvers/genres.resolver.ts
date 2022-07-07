@@ -30,11 +30,7 @@ export class GenresResolver {
     @Args('updatedGenre') updatedGenre: UpdateGenreInterface,
     @Context() context: any,
   ) {
-    return this.genresService.updateItem<UpdateGenreInterface>(
-      id,
-      updatedGenre,
-      context,
-    );
+    return this.genresService.updateItem<UpdateGenreInterface>(id, updatedGenre, context);
   }
 
   @Mutation()

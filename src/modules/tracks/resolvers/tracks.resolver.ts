@@ -79,11 +79,7 @@ export class TracksResolver {
     @Args('updatedTrack') updatedTrack: UpdateTrackInterface,
     @Context() context: any,
   ) {
-    return this.tracksService.editItem<UpdateTrackInterface>(
-      id,
-      updatedTrack,
-      context,
-    );
+    return this.tracksService.updateItem<UpdateTrackInterface>(id, updatedTrack, context);
   }
 
   @Mutation()

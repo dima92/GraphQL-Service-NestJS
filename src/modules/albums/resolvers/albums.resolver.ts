@@ -93,11 +93,7 @@ export class AlbumsResolver {
     @Args('updatedAlbum') updatedAlbum: UpdateAlbumInterface,
     @Context() context: any,
   ) {
-    return this.albumsService.updateItem<UpdateAlbumInterface>(
-      id,
-      updatedAlbum,
-      context,
-    );
+    return this.albumsService.updateItem<UpdateAlbumInterface>(id, updatedAlbum, context);
   }
 
   @Mutation()

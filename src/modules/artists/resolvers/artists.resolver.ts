@@ -56,11 +56,7 @@ export class ArtistsResolver {
     @Args('updatedArtist') updatedArtist: UpdateArtistInterface,
     @Context() context: any,
   ) {
-    return this.artistsService.updateItem<NewArtistInterface>(
-      id,
-      updatedArtist,
-      context,
-    );
+    return this.artistsService.updateItem<NewArtistInterface>(id, updatedArtist, context);
   }
 
   @Mutation()

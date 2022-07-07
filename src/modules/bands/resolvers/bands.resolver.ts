@@ -9,7 +9,7 @@ import {
 import { BandsService } from '../services/bands.service';
 import { Query } from '@nestjs/graphql';
 import { GenresService } from '../../genres/services/genres.service';
-import { NewBandInterface, UpdateBandInterface } from '../bandInterface';
+import { UpdateBandInterface, NewBandInterface } from '../bandInterface';
 
 @Resolver('Band')
 export class BandsResolver {

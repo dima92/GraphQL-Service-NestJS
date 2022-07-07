@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { UpdateArtistInterface } from "../../artists/artistInterface";
+import { UpdateBandInterface } from "../../bands/bandInterface";
 
 @Injectable()
 export class RequestService {
@@ -44,7 +46,7 @@ export class RequestService {
     return { ...data, id: data._id };
   };
 
-  updateItem = async <T>(id: string, updatedItem: T, context: any) => {
+  updateItem = async <T>(id: string, updatedItem: UpdateBandInterface, context: any) => {
     const { authorization } = context.req.headers;
     if (!authorization) return null;
     const { data } = await this.httpService.axiosRef.put(
