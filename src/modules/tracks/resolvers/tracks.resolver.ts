@@ -24,12 +24,12 @@ export class TracksResolver {
 
   @Query()
   async track(@Args('id') id: string) {
-    return this.tracksService.getTrackById(id);
+    return this.tracksService.getById(id);
   }
 
   @Query()
   async tracks(@Args('limit') limit: number, @Args('offset') offset: number) {
-    return this.tracksService.getAllTracks(limit, offset);
+    return this.tracksService.getAll(limit, offset);
   }
 
   @Resolver()
@@ -38,7 +38,7 @@ export class TracksResolver {
     const { artistsIds } = track;
     return await Promise.all(
       artistsIds.map((id) => {
-        return this.artistsService.getArtistById(id);
+        return this.artistsService.getById(id);
       }),
     );
   }
@@ -49,7 +49,7 @@ export class TracksResolver {
     const { bandsIds } = track;
     return await Promise.all(
       bandsIds.map((id) => {
-        return this.bandsService.getBandById(id);
+        return this.bandsService.getById(id);
       }),
     );
   }
@@ -60,7 +60,7 @@ export class TracksResolver {
     const { genresIds } = track;
     return await Promise.all(
       genresIds.map((id: string) => {
-        return this.genresService.getGenreById(id);
+        return this.genresService.getById(id);
       }),
     );
   }
@@ -70,7 +70,7 @@ export class TracksResolver {
     @Args('newTrack') newTrack: NewTrackInterface,
     @Context() context: any,
   ) {
-    return this.tracksService.createTrack(newTrack, context);
+    return this.tracksService.createItem<NewTrackInterface>(newTrack, context);
   }
 
   @Mutation()
@@ -79,11 +79,15 @@ export class TracksResolver {
     @Args('updatedTrack') updatedTrack: UpdateTrackInterface,
     @Context() context: any,
   ) {
-    return this.tracksService.editTrack(id, updatedTrack, context);
+    return this.tracksService.editItem<UpdateTrackInterface>(
+      id,
+      updatedTrack,
+      context,
+    );
   }
 
   @Mutation()
   async deleteTrack(@Args('id') id: string, @Context() context: any) {
-    return this.tracksService.deleteTrack(id, context);
+    return this.tracksService.deleteItem(id, context);
   }
 }

@@ -26,13 +26,13 @@ export class AlbumsResolver {
 
   @Query()
   async album(@Args('id') id: string) {
-    return this.albumsService.getAlbumById(id);
+    return this.albumsService.getById(id);
   }
 
   @Query()
   @Query()
   async albums(@Args('limit') limit: number, @Args('offset') offset: number) {
-    return this.albumsService.getAllAlbums(limit, offset);
+    return this.albumsService.getAll(limit, offset);
   }
 
   @Resolver()
@@ -41,7 +41,7 @@ export class AlbumsResolver {
     const { artistsIds } = album;
     return await Promise.all(
       artistsIds.map((id: string) => {
-        return this.artistsService.getArtistById(id);
+        return this.artistsService.getById(id);
       }),
     );
   }
@@ -52,7 +52,7 @@ export class AlbumsResolver {
     const { bandsIds } = album;
     return await Promise.all(
       bandsIds.map((id: string) => {
-        return this.bandsService.getBandById(id);
+        return this.bandsService.getById(id);
       }),
     );
   }
@@ -63,7 +63,7 @@ export class AlbumsResolver {
     const { tracksIds } = album;
     return await Promise.all(
       tracksIds.map((id: string) => {
-        return this.tracksService.getTrackById(id);
+        return this.tracksService.getById(id);
       }),
     );
   }
@@ -74,7 +74,7 @@ export class AlbumsResolver {
     const { genresIds } = album;
     return await Promise.all(
       genresIds.map((id: string) => {
-        return this.genresService.getGenreById(id);
+        return this.genresService.getById(id);
       }),
     );
   }
@@ -84,7 +84,7 @@ export class AlbumsResolver {
     @Args('newAlbum') newAlbum: NewAlbumInterface,
     @Context() context: any,
   ) {
-    return this.albumsService.createAlbum(newAlbum, context);
+    return this.albumsService.createItem<NewAlbumInterface>(newAlbum, context);
   }
 
   @Mutation()
@@ -93,6 +93,15 @@ export class AlbumsResolver {
     @Args('updatedAlbum') updatedAlbum: UpdateAlbumInterface,
     @Context() context: any,
   ) {
-    return this.albumsService.updateAlbum(id, updatedAlbum, context);
+    return this.albumsService.updateItem<UpdateAlbumInterface>(
+      id,
+      updatedAlbum,
+      context,
+    );
+  }
+
+  @Mutation()
+  async deleteAlbum(@Args('id') id: string, @Context() context: any) {
+    return this.albumsService.deleteItem(id, context);
   }
 }

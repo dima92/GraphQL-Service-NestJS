@@ -20,12 +20,12 @@ export class BandsResolver {
 
   @Query()
   async band(@Args('id') id: string) {
-    return this.bandsService.getBandById(id);
+    return this.bandsService.getById(id);
   }
 
   @Query()
   async bands(@Args('limit') limit: number, @Args('offset') offset: number) {
-    return this.bandsService.getAllBands(limit, offset);
+    return this.bandsService.getAll(limit, offset);
   }
 
   @Resolver()
@@ -45,7 +45,7 @@ export class BandsResolver {
     const { genresIds } = band;
     return await Promise.all(
       genresIds.map((id) => {
-        return this.genresService.getGenreById(id);
+        return this.genresService.getById(id);
       }),
     );
   }
@@ -55,7 +55,7 @@ export class BandsResolver {
     @Args('newBand') newBand: NewBandInterface,
     @Context() context: any,
   ) {
-    return this.bandsService.createBand(newBand, context);
+    return this.bandsService.createItem<NewBandInterface>(newBand, context);
   }
 
   @Mutation()
@@ -64,11 +64,15 @@ export class BandsResolver {
     @Args('updatedBand') updatedBand: UpdateBandInterface,
     @Context() context: any,
   ) {
-    return this.bandsService.updateBand(id, updatedBand, context);
+    return this.bandsService.updateItem<UpdateBandInterface>(
+      id,
+      updatedBand,
+      context,
+    );
   }
 
   @Mutation()
   async deleteBand(@Args('id') id: string, @Context() context: any) {
-    return this.bandsService.deleteBand(id, context);
+    return this.bandsService.deleteItem(id, context);
   }
 }

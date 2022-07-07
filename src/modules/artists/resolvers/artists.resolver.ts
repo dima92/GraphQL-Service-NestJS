@@ -20,12 +20,12 @@ export class ArtistsResolver {
 
   @Query()
   async artist(@Args('id') id: string) {
-    return this.artistsService.getArtistById(id);
+    return this.artistsService.getById(id);
   }
 
   @Query()
   async artists(@Args('limit') limit: number, @Args('offset') offset: number) {
-    return this.artistsService.getAllArtists(limit, offset);
+    return this.artistsService.getAll(limit, offset);
   }
 
   @Resolver()
@@ -34,7 +34,7 @@ export class ArtistsResolver {
     const { bandsIds } = artist;
     return await Promise.all(
       bandsIds.map((id) => {
-        return this.bandsService.getBandById(id);
+        return this.bandsService.getById(id);
       }),
     );
   }
@@ -44,7 +44,10 @@ export class ArtistsResolver {
     @Args('newArtist') newArtist: NewArtistInterface,
     @Context() context: any,
   ) {
-    return this.artistsService.createArtist(newArtist, context);
+    return this.artistsService.createItem<NewArtistInterface>(
+      newArtist,
+      context,
+    );
   }
 
   @Mutation()
@@ -53,11 +56,15 @@ export class ArtistsResolver {
     @Args('updatedArtist') updatedArtist: UpdateArtistInterface,
     @Context() context: any,
   ) {
-    return this.artistsService.updateArtist(id, updatedArtist, context);
+    return this.artistsService.updateItem<NewArtistInterface>(
+      id,
+      updatedArtist,
+      context,
+    );
   }
 
   @Mutation()
   async deleteArtist(@Args('id') id: string, @Context() context: any) {
-    return this.artistsService.deleteArtist(id, context);
+    return this.artistsService.deleteItem(id, context);
   }
 }

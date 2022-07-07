@@ -58,7 +58,7 @@ export class FavouritesResolver {
     const { artistsIds } = album;
     return await Promise.all(
       artistsIds.map((id: string) => {
-        return this.artistsService.getArtistById(id);
+        return this.artistsService.getById(id);
       }),
     );
   }
@@ -69,7 +69,7 @@ export class FavouritesResolver {
     const { bandsIds } = album;
     return await Promise.all(
       bandsIds.map((id: string) => {
-        return this.bandsService.getBandById(id);
+        return this.bandsService.getById(id);
       }),
     );
   }
@@ -80,7 +80,7 @@ export class FavouritesResolver {
     const { tracksIds } = album;
     return await Promise.all(
       tracksIds.map((id: string) => {
-        return this.tracksService.getTrackById(id);
+        return this.tracksService.getById(id);
       }),
     );
   }
@@ -91,7 +91,7 @@ export class FavouritesResolver {
     const { genresIds } = album;
     return await Promise.all(
       genresIds.map((id: string) => {
-        return this.genresService.getGenreById(id);
+        return this.genresService.getById(id);
       }),
     );
   }

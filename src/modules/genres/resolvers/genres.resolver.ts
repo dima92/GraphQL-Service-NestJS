@@ -8,12 +8,12 @@ export class GenresResolver {
 
   @Query()
   async genre(@Args('id') id: string) {
-    return this.genresService.getGenreById(id);
+    return this.genresService.getById(id);
   }
 
   @Query()
   async genres(@Args('limit') limit: number, @Args('offset') offset: number) {
-    return this.genresService.getAllGenres(limit, offset);
+    return this.genresService.getAll(limit, offset);
   }
 
   @Mutation()
@@ -21,7 +21,7 @@ export class GenresResolver {
     @Args('newGenre') newGenre: NewGenreInterface,
     @Context() context: any,
   ) {
-    return this.genresService.createGenre(newGenre, context);
+    return this.genresService.createItem<NewGenreInterface>(newGenre, context);
   }
 
   @Mutation()
@@ -30,11 +30,15 @@ export class GenresResolver {
     @Args('updatedGenre') updatedGenre: UpdateGenreInterface,
     @Context() context: any,
   ) {
-    return this.genresService.updateGenre(id, updatedGenre, context);
+    return this.genresService.updateItem<UpdateGenreInterface>(
+      id,
+      updatedGenre,
+      context,
+    );
   }
 
   @Mutation()
   async deleteGenre(@Args('id') id: string, @Context() context: any) {
-    return this.genresService.deleteGenre(id, context);
+    return this.genresService.deleteItem(id, context);
   }
 }
