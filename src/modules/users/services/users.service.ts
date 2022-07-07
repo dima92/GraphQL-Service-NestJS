@@ -17,4 +17,17 @@ export class UsersService {
     );
     return data;
   };
+
+  registerUser = async (user: {
+    firstName: string;
+    lastName: string;
+    password: string;
+    email: string;
+  }) => {
+    const { data } = await this.httpService.axiosRef.post(
+      `${this.baseUrl}/register`,
+      user,
+    );
+    return { ...data, id: data._id };
+  };
 }
