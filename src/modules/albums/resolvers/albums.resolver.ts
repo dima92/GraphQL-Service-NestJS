@@ -1,9 +1,18 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { AlbumsService } from '../services/albums.service';
 import { ArtistsService } from '../../artists/services/artists.service';
 import { BandsService } from '../../bands/services/bands.service';
 import { TracksService } from '../../tracks/services/tracks.service';
 import { GenresService } from '../../genres/services/genres.service';
+import { NewAlbumInterface } from '../albumInterface';
 
 @Resolver('Album')
 export class AlbumsResolver {
@@ -68,5 +77,13 @@ export class AlbumsResolver {
         return this.genresService.getGenreById(id);
       }),
     );
+  }
+
+  @Mutation()
+  async createAlbum(
+    @Args('newAlbum') newAlbum: NewAlbumInterface,
+    @Context() context: any,
+  ) {
+    return this.albumsService.createAlbum(newAlbum, context);
   }
 }
