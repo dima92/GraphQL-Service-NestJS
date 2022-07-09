@@ -12,7 +12,10 @@ export class GenresResolver {
   }
 
   @Query()
-  async genres(@Args('limit') limit: number, @Args('offset') offset: number) {
+  async genres(
+    @Args('limit', { defaultValue: 5 }) limit: number,
+    @Args('offset', { defaultValue: 0 }) offset: number,
+  ) {
     return this.genresService.getAll(limit, offset);
   }
 
@@ -27,10 +30,14 @@ export class GenresResolver {
   @Mutation()
   async updateGenre(
     @Args('id') id: string,
-    @Args('updatedGenre') updatedGenre: UpdateGenreInterface,
+    @Args('genre') updatedGenre: UpdateGenreInterface,
     @Context() context: any,
   ) {
-    return this.genresService.updateItem<UpdateGenreInterface>(id, updatedGenre, context);
+    return this.genresService.updateItem<UpdateGenreInterface>(
+      id,
+      updatedGenre,
+      context,
+    );
   }
 
   @Mutation()

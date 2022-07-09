@@ -24,7 +24,10 @@ export class ArtistsResolver {
   }
 
   @Query()
-  async artists(@Args('limit') limit: number, @Args('offset') offset: number) {
+  async artists(
+    @Args('limit', { defaultValue: 5 }) limit: number,
+    @Args('offset', { defaultValue: 0 }) offset: number,
+  ) {
     return this.artistsService.getAll(limit, offset);
   }
 
@@ -53,10 +56,15 @@ export class ArtistsResolver {
   @Mutation()
   async updateArtist(
     @Args('id') id: string,
-    @Args('updatedArtist') updatedArtist: UpdateArtistInterface,
+    @Args('artist') updatedArtist: UpdateArtistInterface,
     @Context() context: any,
   ) {
-    return this.artistsService.updateItem<NewArtistInterface>(id, updatedArtist, context);
+    return this.artistsService.updateItem<NewArtistInterface>(
+      id,
+      // @ts-ignore
+      updatedArtist,
+      context,
+    );
   }
 
   @Mutation()

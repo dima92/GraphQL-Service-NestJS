@@ -16,7 +16,7 @@ type Member {
 }
 
 input MemberInput {
-  artistId: ID!
+  id: ID!
   instrument: String
   years: [Int]
 }

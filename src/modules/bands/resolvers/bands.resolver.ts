@@ -24,7 +24,10 @@ export class BandsResolver {
   }
 
   @Query()
-  async bands(@Args('limit') limit: number, @Args('offset') offset: number) {
+  async bands(
+    @Args('limit', { defaultValue: 5 }) limit: number,
+    @Args('offset', { defaultValue: 0 }) offset: number,
+  ) {
     return this.bandsService.getAll(limit, offset);
   }
 
@@ -61,7 +64,7 @@ export class BandsResolver {
   @Mutation()
   async updateBand(
     @Args('id') id: string,
-    @Args('updatedBand') updatedBand: UpdateBandInterface,
+    @Args('band') updatedBand: UpdateBandInterface,
     @Context() context: any,
   ) {
     return this.bandsService.updateItem<UpdateBandInterface>(
